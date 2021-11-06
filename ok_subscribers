@@ -136,3 +136,7 @@
 
         print("go to bed")
         time.sleep(60)
+        
+# dropdown_ac button-pro __with-arrow __arrow-svg __sec __wide  в группе ( вступить в группу)  ||  //*[@id="hook_Block_AltGroupMainMenu"]/ul/div/a  вступить
+# u-menu_a toggle-dropdown  Запрос отправлен (подписаться на пользователя)                     ||            //*[@id="hook_Block_MainMenu"]/div/ul/li[1]/a  добавить в друзья
+
