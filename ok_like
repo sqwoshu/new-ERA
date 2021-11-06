@@ -1,0 +1,149 @@
+    def auto_follow_ok(self):
+        browser = self.browser
+        time.sleep(2)
+        browser.get('https://bosslike.ru/tasks/odnoklassniki/like/')
+        window_before = browser.window_handles[0]
+
+        ballans_ok = browser.find_element(By.ID,'user_points_balance').text
+        print('ok',ballans_ok)
+
+        title = []
+        t = browser.find_elements(By.CSS_SELECTOR, ".media-info-name.text-overflow.text-overflow_2lines_xs")
+        for i in t:
+            title.append(i.text.split()[1])
+
+        try:
+            button_ok = browser.find_element(By.CSS_SELECTOR,'.btn-sm')
+            if button_ok.is_enabled():
+                for i in range(0, len(title)):
+                    time.sleep(1)
+                    try:
+                        self.click_ok()
+
+                        if title[0] == "видео":
+                            self.like_video_ok()
+                        elif title[0] == "фотографию":
+                            self.like_photo_ok()
+                        else:
+                            self.like_post_ok()
+                        del title[0]
+
+                        browser.switch_to.window(window_before)
+                        self.check_ok()
+                    except Exception:
+                        try:
+                            ost = browser.find_element(By.XPATH,"//*[contains(text(), 'ОСТАНОВЛЕНО')]")
+                            ost.click()
+                        except Exception:
+                            return True
+                    if i == 19:
+                        time.sleep(random.randrange(2, 5))
+                        self.sleep()
+        except Exception:
+            time.sleep(2)
+            self.sleep()
+
+    def click_ok(self):
+        browser = self.browser
+        browser.find_element(By.CSS_SELECTOR,'.btn-sm').click()
+        try:
+            no = WebDriverWait(browser, 2).until(
+                EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Указанного задания не существует')]")))
+            no.click()
+            return True
+        except Exception:
+            return True
+
+    def like_post_ok(self):
+        browser = self.browser
+        window_after = browser.window_handles[1]
+        browser.switch_to.window(window_after)
+
+        try:
+            like_ok = WebDriverWait(browser, 20).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, '.svg-ic.svg-ico_klass_24.widget_ico')))
+            like_ok.click()
+
+            time.sleep(2)
+            browser.close()
+        except Exception:
+            time.sleep(2)
+            browser.close()
+
+    def like_photo_ok(self):
+        browser = self.browser
+        window_after = browser.window_handles[1]
+        browser.switch_to.window(window_after)
+
+        try:
+            like_ok = WebDriverWait(browser, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_ActionsPLLB"]/div/div[1]/ul/li[3]')))
+            like_ok.click()
+
+            time.sleep(2)
+            browser.close()
+        except Exception:
+            time.sleep(2)
+            browser.close()
+
+    def like_video_ok(self):
+        browser = self.browser
+        window_after = browser.window_handles[1]
+        browser.switch_to.window(window_after)
+
+        try:
+            like_ok = WebDriverWait(browser, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="vp_cnt"]/div[1]/div/div[2]/div[2]/ul/li[3]')))
+            like_ok.click()
+
+            time.sleep(2)
+            browser.close()
+        except Exception:
+            time.sleep(2)
+            browser.close()
+
+    def check_ok(self):
+        browser = self.browser
+        time.sleep(1)
+        try:
+            text = WebDriverWait(browser, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, ".notify-message")))
+            w = text
+            print(w.text)
+            if w.text == 'Задание успешно выполнено':
+                text.click()
+            elif w.text == 'Указанного задания не существует':
+                text.click()
+                self.delete()
+            elif w.text == 'Выполнение не подтверждено, проверьте ещё раз\nНажмите на кнопку «Проверить»':
+                text.click()
+                self.delete()
+            elif w.text == 'Задание не выполнено':
+                text.click()
+                self.delete()
+            elif w.text == 'Вы уже выполняли данное задание':
+                text.click()
+                self.delete()
+            else:
+                text.click()
+                time.sleep(2)
+        except Exception as ex:
+            self.sleep()
+
+    def delete(self):
+        browser = self.browser
+        time.sleep(1)
+
+        browser.find_element(By.CSS_SELECTOR,'.btn-muted-light').click()
+        del_ = WebDriverWait(browser, 2).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.delete')))
+        del_.click()
+
+    def sleep(self):
+        browser = self.browser
+
+        ballans_ok = browser.find_element(By.ID, 'user_points_balance').text
+        print('ok', ballans_ok)
+
+        print("go to bed")
+        time.sleep(60)
