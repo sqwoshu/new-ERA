@@ -4,7 +4,6 @@
         browser.get('https://bosslike.ru/tasks/odnoklassniki/like/')
         window_before = browser.window_handles[0]
 
-
         title = []
         try:
             count = browser.find_element(By.XPATH, '//*[@id="list-7-3"]/span[1]').text
@@ -13,11 +12,10 @@
                 for i in t:
                     title.append(i.text.split()[1])
 
-
                 for i in range(0, len(title)):
                     time.sleep(1)
                     try:
-                        self.click_ok()
+                        self.click()
 
                         if title[0] == "видео":
                             self.like_video_ok()
@@ -28,7 +26,7 @@
                         del title[0]
 
                         browser.switch_to.window(window_before)
-                        self.check_ok()
+                        self.check()
                     except Exception:
                         try:
                             ost = browser.find_element(By.XPATH, "//*[contains(text(), 'ОСТАНОВЛЕНО')]")
@@ -92,63 +90,3 @@
         except Exception:
             time.sleep(2)
             browser.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def check_ok(self):
-        browser = self.browser
-        time.sleep(1)
-        try:
-            text = WebDriverWait(browser, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, ".notify-message")))
-            w = text
-            print(w.text)
-            if w.text == 'Задание успешно выполнено':
-                text.click()
-            elif w.text == 'Указанного задания не существует':
-                text.click()
-                self.delete()
-            elif w.text == 'Выполнение не подтверждено, проверьте ещё раз\nНажмите на кнопку «Проверить»':
-                text.click()
-                self.delete()
-            elif w.text == 'Задание не выполнено':
-                text.click()
-                self.delete()
-            elif w.text == 'Вы уже выполняли данное задание':
-                text.click()
-                self.delete()
-            else:
-                text.click()
-                time.sleep(2)
-        except Exception as ex:
-            self.sleep()
-
-    def delete(self):
-        browser = self.browser
-        time.sleep(1)
-
-        browser.find_element(By.CSS_SELECTOR,'.btn-muted-light').click()
-        del_ = WebDriverWait(browser, 2).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.delete')))
-        del_.click()
-
-    def sleep(self):
-        browser = self.browser
-
-        ballans_ok = browser.find_element(By.ID, 'user_points_balance').text
-        print('ok', ballans_ok)
-
-        print("go to bed")
-        time.sleep(60)
