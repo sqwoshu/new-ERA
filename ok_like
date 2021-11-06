@@ -4,17 +4,16 @@
         browser.get('https://bosslike.ru/tasks/odnoklassniki/like/')
         window_before = browser.window_handles[0]
 
-        ballans_ok = browser.find_element(By.ID,'user_points_balance').text
-        print('ok',ballans_ok)
 
         title = []
-        t = browser.find_elements(By.CSS_SELECTOR, ".media-info-name.text-overflow.text-overflow_2lines_xs")
-        for i in t:
-            title.append(i.text.split()[1])
-
         try:
-            button_ok = browser.find_element(By.CSS_SELECTOR,'.btn-sm')
-            if button_ok.is_enabled():
+            count = browser.find_element(By.XPATH, '//*[@id="list-7-3"]/span[1]').text
+            if int(count) > 0:
+                t = browser.find_elements(By.CSS_SELECTOR, ".media-info-name.text-overflow.text-overflow_2lines_xs")
+                for i in t:
+                    title.append(i.text.split()[1])
+
+
                 for i in range(0, len(title)):
                     time.sleep(1)
                     try:
@@ -32,27 +31,19 @@
                         self.check_ok()
                     except Exception:
                         try:
-                            ost = browser.find_element(By.XPATH,"//*[contains(text(), 'ОСТАНОВЛЕНО')]")
+                            ost = browser.find_element(By.XPATH, "//*[contains(text(), 'ОСТАНОВЛЕНО')]")
                             ost.click()
                         except Exception:
                             return True
                     if i == 19:
                         time.sleep(random.randrange(2, 5))
                         self.sleep()
+            else:
+                title.clear()
+                self.sleep()
         except Exception:
-            time.sleep(2)
+            title.clear()
             self.sleep()
-
-    def click_ok(self):
-        browser = self.browser
-        browser.find_element(By.CSS_SELECTOR,'.btn-sm').click()
-        try:
-            no = WebDriverWait(browser, 2).until(
-                EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Указанного задания не существует')]")))
-            no.click()
-            return True
-        except Exception:
-            return True
 
     def like_post_ok(self):
         browser = self.browser
@@ -101,6 +92,20 @@
         except Exception:
             time.sleep(2)
             browser.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def check_ok(self):
         browser = self.browser
