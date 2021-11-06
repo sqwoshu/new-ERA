@@ -1,4 +1,4 @@
-    def auto_follow_ok(self):
+    def auto_like_ok(self):
         browser = self.browser
         time.sleep(2)
         browser.get('https://bosslike.ru/tasks/odnoklassniki/like/')
