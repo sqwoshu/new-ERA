@@ -1,16 +1,16 @@
-    def auto_follow_vk(self):
+    def auto_subscribers_vk(self):
         browser = self.browser
         time.sleep(2)
         browser.get('https://bosslike.ru/tasks/vkontakte/subscribe/')
         window_before = browser.window_handles[0]
 
-        ballans_ok = browser.find_element(By.ID,'user_points_balance').text
-        print('vk',ballans_ok)
+        ballans_ok = browser.find_element(By.ID, 'user_points_balance').text
+        print('vk', ballans_ok)
 
         title = []
 
         try:
-            count = browser.find_element(By.XPATH,'//*[@id="list-1-3"]/span[1]').text
+            count = browser.find_element(By.XPATH, '//*[@id="list-1-3"]/span[1]').text
             if int(count) > 0:
 
                 t = browser.find_elements(By.CSS_SELECTOR, ".media-info-name.text-overflow.text-overflow_2lines_xs")
@@ -23,18 +23,18 @@
                         self.click()
 
                         if title[0] == "пользователя":
-                            self.vkpol()
+                            self.vk_pol()
                         elif title[0] == "страницу":
-                            self.vkst()
+                            self.vk_st()
                         elif title[0] == "группу":
-                            self.vkgr()
+                            self.vk_gr()
                         del title[0]
 
                         browser.switch_to.window(window_before)
                         self.check()
                     except Exception:
                         try:
-                            ost = browser.find_element(By.XPATH,"//*[contains(text(), 'ОСТАНОВЛЕНО')]")
+                            ost = browser.find_element(By.XPATH, "//*[contains(text(), 'ОСТАНОВЛЕНО')]")
                             ost.click()
                         except Exception:
                             return True
@@ -49,16 +49,16 @@
             title.clear()
             self.sleep()
 
-    def vkpol(self):
+    def vk_pol(self):
         browser = self.browser
         window_after = browser.window_handles[1]
         browser.switch_to.window(window_after)
 
         try:
             t = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="narrow_column"]/div[1]/aside/div/div/div/div[2]')))
+                EC.presence_of_element_located((By.XPATH, '//*[@id="friend_status"]/div/button/span/span')))
             if t.text == "Добавить в друзья":
-                browser.find_element(By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div/a').click()
+                browser.find_element(By.XPATH, '//*[@id="friend_status"]/div/button').click()
 
             time.sleep(2)
             browser.close()
@@ -66,14 +66,14 @@
             time.sleep(2)
             browser.close()
 
-    def vkst(self):
+    def vk_st(self):
         browser = self.browser
         window_after = browser.window_handles[1]
         browser.switch_to.window(window_after)
 
         try:
             t = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="page_actions"]/div/div')))
+                EC.presence_of_element_located((By.CSS_SELECTOR, '.flat_button.button_wide')))
             if t.text == "Подписаться":
                 browser.find_element(By.XPATH, '//*[@id="public_subscribe"]').click()
 
@@ -83,16 +83,16 @@
             time.sleep(2)
             browser.close()
 
-    def vkgr(self):
+    def vk_gr(self):
         browser = self.browser
         window_after = browser.window_handles[1]
         browser.switch_to.window(window_after)
 
         try:
             t = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="page_actions"]/div/div')))
+                EC.presence_of_element_located((By.CSS_SELECTOR, '.flat_button.button_wide')))
             if t.text == "Вступить в группу":
-                browser.find_element(By.XPATH, '//*[@id="join_button"]"]').click()
+                browser.find_element(By.XPATH, '//*[@id="join_button"]').click()
 
             time.sleep(2)
             browser.close()
