@@ -1,40 +1,4 @@
-    def one(self):
-        browser = self.browser
-        window_after = browser.window_handles[1]
-        browser.switch_to.window(window_after)
-
-        try:
-            t = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div')))
-            if t.text == "Вступить":
-                vst = browser.find_element(By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div/a')
-                vst.click()
-
-            time.sleep(2)
-            browser.close()
-        except Exception:
-            time.sleep(2)
-            browser.close()
-
-    def two(self):
-        browser = self.browser
-        window_after = browser.window_handles[1]
-        browser.switch_to.window(window_after)
-
-        try:
-            t = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_MainMenu"]/div/ul/li[1]')))
-            if t.text == "Добавить в друзья":
-                pod = browser.find_element(By.XPATH, '//*[@id="hook_Block_MainMenu"]/div/ul/li[1]/a')
-                pod.click()
-
-            time.sleep(2)
-            browser.close()
-        except Exception:
-            time.sleep(2)
-            browser.close()
-
-    def auto_follow_ok(self):
+    def auto_subscribers_ok(self):
         browser = self.browser
         time.sleep(2)
         browser.get('https://bosslike.ru/tasks/odnoklassniki/subscribe/')
@@ -82,3 +46,40 @@
         except Exception:
             title.clear()
             self.sleep()
+            
+            
+    def one(self):
+        browser = self.browser
+        window_after = browser.window_handles[1]
+        browser.switch_to.window(window_after)
+
+        try:
+            t = WebDriverWait(browser, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div')))
+            if t.text == "Вступить":
+                vst = browser.find_element(By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div/a')
+                vst.click()
+
+            time.sleep(2)
+            browser.close()
+        except Exception:
+            time.sleep(2)
+            browser.close()
+
+    def two(self):
+        browser = self.browser
+        window_after = browser.window_handles[1]
+        browser.switch_to.window(window_after)
+
+        try:
+            t = WebDriverWait(browser, 20).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_MainMenu"]/div/ul/li[1]')))
+            if t.text == "Добавить в друзья":
+                pod = browser.find_element(By.XPATH, '//*[@id="hook_Block_MainMenu"]/div/ul/li[1]/a')
+                pod.click()
+
+            time.sleep(2)
+            browser.close()
+        except Exception:
+            time.sleep(2)
+            browser.close()
