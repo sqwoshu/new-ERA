@@ -1,13 +1,25 @@
     def click(self):
         browser = self.browser
-        browser.find_element(By.CSS_SELECTOR, '.btn-sm').click()
+
+        index_click =[]
+        c = browser.find_element(By.CSS_SELECTOR, ".do.do-task.btn.btn-sm.btn-primary.btn-block").get_attribute(
+            "data-task-id")
+        browser.find_element(By.XPATH,f'//*[@id="task-item-{c}"]/div/div/div/div[4]/a').click()
         try:
-            no = WebDriverWait(browser, 2).until(
-                EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Указанного задания не существует')]")))
-            no.click()
-            return True
+            mes = WebDriverWait(browser, 30).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, ".notify-message")))
+            if mes.text == "Указанного задания не существует":
+                while mes.text != "Указанного задания не существует":
+                    c = browser.find_element(By.CSS_SELECTOR,
+                                             ".do.do-task.btn.btn-sm.btn-primary.btn-block").get_attribute(
+                        "data-task-id")
+                    browser.find_element(By.XPATH,
+                                         f'//*[@id="task-item-{c}"]/div/div/div/div[4]/a').click()
+                    del index_click[0]
+            else:
+                return  True
         except Exception:
-            return True
+            return  True
 
     def check(self):
         browser = self.browser
