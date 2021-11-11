@@ -46,6 +46,9 @@
             elif w.text == 'Вы уже выполняли данное задание':
                 text.click()
                 self.delete()
+            elif w.text == "Ваш Телеграм аккаунт достиг лимита подписок равное 500":
+                text.click()
+                self.
             else:
                 text.click()
                 self.delete()
