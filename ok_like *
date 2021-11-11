@@ -12,7 +12,7 @@
                 for i in t:
                     title.append(i.text.split()[1])
 
-                for i in range(0, len(title)):
+                for i in range(20):
                     time.sleep(1)
                     try:
                         self.click()
@@ -26,13 +26,9 @@
                         del title[0]
 
                         browser.switch_to.window(window_before)
-                        self.check()
+
                     except Exception:
-                        try:
-                            ost = browser.find_element(By.XPATH, "//*[contains(text(), 'ОСТАНОВЛЕНО')]")
-                            ost.click()
-                        except Exception:
-                            return True
+                        self.sleep()
                     if i == 19:
                         time.sleep(random.randrange(2, 5))
                         self.sleep()
@@ -43,50 +39,60 @@
             title.clear()
             self.sleep()
 
+
     def like_post_ok(self):
         browser = self.browser
-        window_after = browser.window_handles[1]
-        browser.switch_to.window(window_after)
-
         try:
-            like_ok = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, '.svg-ic.svg-ico_klass_24.widget_ico')))
-            like_ok.click()
+            window_after = browser.window_handles[1]
+            browser.switch_to.window(window_after)
 
-            time.sleep(2)
-            browser.close()
+            try:
+                like_ok = WebDriverWait(browser, 20).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, '.svg-ic.svg-ico_klass_24.widget_ico')))
+                like_ok.click()
+
+                time.sleep(2)
+                browser.close()
+            except Exception:
+                time.sleep(2)
+                browser.close()
         except Exception:
-            time.sleep(2)
-            browser.close()
+            return True
 
     def like_photo_ok(self):
         browser = self.browser
-        window_after = browser.window_handles[1]
-        browser.switch_to.window(window_after)
-
         try:
-            like_ok = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_ActionsPLLB"]/div/div[1]/ul/li[3]')))
-            like_ok.click()
+            window_after = browser.window_handles[1]
+            browser.switch_to.window(window_after)
 
-            time.sleep(2)
-            browser.close()
+            try:
+                like_ok = WebDriverWait(browser, 20).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_ActionsPLLB"]/div/div[1]/ul/li[3]')))
+                like_ok.click()
+
+                time.sleep(2)
+                browser.close()
+            except Exception:
+                time.sleep(2)
+                browser.close()
         except Exception:
-            time.sleep(2)
-            browser.close()
-
+            return True
     def like_video_ok(self):
         browser = self.browser
-        window_after = browser.window_handles[1]
-        browser.switch_to.window(window_after)
-
         try:
-            like_ok = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="vp_cnt"]/div[1]/div/div[2]/div[2]/ul/li[3]')))
-            like_ok.click()
+            window_after = browser.window_handles[1]
+            browser.switch_to.window(window_after)
 
-            time.sleep(2)
-            browser.close()
+            try:
+                like_ok = WebDriverWait(browser, 20).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="vp_cnt"]/div[1]/div/div[2]/div[2]/ul/li[3]')))
+                like_ok.click()
+
+                time.sleep(2)
+                browser.close()
+            except Exception:
+                time.sleep(2)
+                browser.close()
+
         except Exception:
-            time.sleep(2)
-            browser.close()
+            return True
