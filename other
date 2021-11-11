@@ -5,7 +5,6 @@
         c = self.browser.find_elements(By.CSS_SELECTOR, ".do.execute-task.btn.btn-sm.btn-primary.btn-block")
         for i in c:
             self.index_click.append(i.get_attribute('data-task-id'))
-        print(self.index_click)
 
         browser.find_element(By.XPATH,f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[4]/a').click()
         del index_click[0]
