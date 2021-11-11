@@ -1,0 +1,17 @@
+    def auto_subscribe_teleg(self):
+        browser = self.browser
+        browser.get('https://bosslike.ru/tasks/telegram/subscribe/done17586521/')
+        
+        ballans_teleg = browser.find_element(By.ID,'user_points_balance').text
+        print('teleg', ballans_teleg)
+        
+        for i in range(20):
+            time.sleep(random.randrange(2, 3))
+            try:
+                self.click()
+                self.check()
+            except Exception:
+                browser.refresh()
+                time.sleep(10)
+            if i == 19:
+                self.sleep()
