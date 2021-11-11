@@ -9,7 +9,6 @@
             if d not in index_click:
                 self.index_click.append(d)
 
-        print(index_click)
         browser.find_element(By.XPATH,f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[4]/a').click()
         del index_click[0]
 
