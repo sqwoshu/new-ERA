@@ -8,15 +8,14 @@
         print('ok', ballans_ok)
 
         title = []
-
         try:
             count = browser.find_element(By.XPATH, '//*[@id="list-7-3"]/span[1]').text
-            if int(count) > 0:
+            if int(count) >= 20:
                 t = browser.find_elements(By.CSS_SELECTOR, ".media-info-name.text-overflow.text-overflow_2lines_xs")
                 for i in t:
                     title.append(i.text.split()[0])
 
-                for i in range(0, len(title)):
+                for i in range(20):
                     time.sleep(1)
                     try:
                         self.click()
@@ -25,17 +24,11 @@
                             self.two()
                         elif title[0] == "Вступить":
                             self.one()
-
                         del title[0]
 
                         browser.switch_to.window(window_before)
-                        self.check()
                     except Exception:
-                        try:
-                            ost = browser.find_element(By.XPATH, "//*[contains(text(), 'ОСТАНОВЛЕНО')]")
-                            ost.click()
-                        except Exception:
-                            return True
+                        self.sleep()
                     if i == 19:
                         time.sleep(random.randrange(2, 5))
                         title.clear()
@@ -46,40 +39,45 @@
         except Exception:
             title.clear()
             self.sleep()
-            
-            
+
     def one(self):
         browser = self.browser
-        window_after = browser.window_handles[1]
-        browser.switch_to.window(window_after)
-
         try:
-            t = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div')))
-            if t.text == "Вступить":
-                vst = browser.find_element(By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div/a')
-                vst.click()
+            window_after = browser.window_handles[1]
+            browser.switch_to.window(window_after)
 
-            time.sleep(2)
-            browser.close()
+            try:
+                t = WebDriverWait(browser, 20).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div')))
+                if t.text == "Вступить":
+                    vst = browser.find_element(By.XPATH, '//*[@id="hook_Block_AltGroupMainMenu"]/ul/div/a')
+                    vst.click()
+
+                time.sleep(2)
+                browser.close()
+            except Exception:
+                time.sleep(2)
+                browser.close()
         except Exception:
-            time.sleep(2)
-            browser.close()
+            return True
 
     def two(self):
         browser = self.browser
-        window_after = browser.window_handles[1]
-        browser.switch_to.window(window_after)
-
         try:
-            t = WebDriverWait(browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_MainMenu"]/div/ul/li[1]')))
-            if t.text == "Добавить в друзья":
-                pod = browser.find_element(By.XPATH, '//*[@id="hook_Block_MainMenu"]/div/ul/li[1]/a')
-                pod.click()
+            window_after = browser.window_handles[1]
+            browser.switch_to.window(window_after)
 
-            time.sleep(2)
-            browser.close()
+            try:
+                t = WebDriverWait(browser, 20).until(
+                    EC.presence_of_element_located((By.XPATH, '//*[@id="hook_Block_MainMenu"]/div/ul/li[1]')))
+                if t.text == "Добавить в друзья":
+                    pod = browser.find_element(By.XPATH, '//*[@id="hook_Block_MainMenu"]/div/ul/li[1]/a')
+                    pod.click()
+
+                time.sleep(2)
+                browser.close()
+            except Exception:
+                time.sleep(2)
+                browser.close()
         except Exception:
-            time.sleep(2)
-            browser.close()
+            return True
