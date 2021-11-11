@@ -2,63 +2,16 @@
         browser = self.browser
         index_click = self.index_click
 
-        c = self.browser.find_elements(By.CSS_SELECTOR, ".do.execute-task.btn.btn-sm.btn-primary.btn-block")
+        time.sleep(1)
+        c = self.browser.find_elements(By.CSS_SELECTOR, ".panel-group.task_item")
         for i in c:
-            self.index_click.append(i.get_attribute('data-task-id'))
+            d = i.get_attribute('id').split('task-item-')[1]
+            if d not in index_click:
+                self.index_click.append(d)
 
+        print(index_click)
         browser.find_element(By.XPATH,f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[4]/a').click()
         del index_click[0]
-        try:
-            mes = WebDriverWait(browser, 3).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, ".notify-message")))
-            if mes.text == "Указанного задания не существует":
-                while mes.text != "Указанного задания не существует":
-                    browser.find_element(By.XPATH,
-                                         f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[4]/a').click()
-                    del index_click[0]
-            else:
-                return  True
-        except Exception:
-            return  True
-
-    def check(self):
-        browser = self.browser
-        time.sleep(1)
-        try:
-            text = WebDriverWait(browser, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, ".notify-message")))
-            w = text
-            if w.text == 'Задание успешно выполнено':
-                text.click()
-            elif w.text == 'Указанного задания не существует':
-                text.click()
-                self.delete()
-            elif w.text == 'Выполнение не подтверждено, проверьте ещё раз\nНажмите на кнопку «Проверить»':
-                text.click()
-                self.delete()
-            elif w.text == 'Задание не выполнено':
-                text.click()
-                self.delete()
-            elif w.text == 'Вы уже выполняли данное задание':
-                text.click()
-                self.delete()
-            elif w.text == "Ваш Телеграм аккаунт достиг лимита подписок равное 500":
-                text.click()
-                self.
-            else:
-                text.click()
-                self.delete()
-        except Exception as ex:
-            self.sleep()
-
-    def delete(self):
-        browser = self.browser
-        time.sleep(1)
-
-        browser.find_element(By.CSS_SELECTOR, '.btn-muted-light').click()
-        del_ = WebDriverWait(browser, 2).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.delete')))
-        del_.click()
 
     def sleep(self):
         browser = self.browser
