@@ -14,9 +14,6 @@
                 EC.presence_of_element_located((By.CSS_SELECTOR, ".notify-message")))
             if mes.text == "Указанного задания не существует":
                 while mes.text != "Указанного задания не существует":
-                    c = browser.find_element(By.CSS_SELECTOR,
-                                             ".do.do-task.btn.btn-sm.btn-primary.btn-block").get_attribute(
-                        "data-task-id")
                     browser.find_element(By.XPATH,
                                          f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[4]/a').click()
                     del index_click[0]
