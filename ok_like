@@ -7,7 +7,7 @@
         title = []
         try:
             count = browser.find_element(By.XPATH, '//*[@id="list-7-3"]/span[1]').text
-            if int(count) > 0:
+            if int(count) >= 20:
                 t = browser.find_elements(By.CSS_SELECTOR, ".media-info-name.text-overflow.text-overflow_2lines_xs")
                 for i in t:
                     title.append(i.text.split()[1])
