@@ -1,0 +1,51 @@
+    def auto_subscribe_in(self):
+        browser = self.browser
+        index_in = self.index_in
+
+        browser.get('https://bosslike.ru/tasks/instagram/subscribe/')
+        window_before = browser.window_handles[0]
+
+        time.sleep(2)
+        ballans = browser.find_element(By.ID,'user_points_balance').text
+        print('in', ballans)
+
+        count = browser.find_element(By.XPATH,'//*[@id="list-3-3"]/span[1]').text
+        if int(count) >= 20:
+            for i in range(20):
+                time.sleep(1)
+                try:
+                    self.click()
+                    self.follow_in()
+
+                    browser.switch_to.window(window_before)
+                    try:
+                        time.sleep(1.5)
+                        browser.find_element(By.XPATH,f'//*[@id="task-item-{index_in[0]}"]/div/div/div/div[4]/a').click()
+                        del index_in[0]
+                    except Exception:
+                        del index_in[0]
+
+                    time.sleep(5)
+                except Exception:
+                    self.sleep()
+                if i == 19:
+                    self.sleep()
+        else:
+            self.sleep()
+
+    def follow_in(self):
+        browser = self.browser
+        try:
+            window_after = browser.window_handles[1]
+            browser.switch_to.window(window_after)
+
+            try:
+                sub_in = WebDriverWait(browser, 30).until(EC.presence_of_element_located(
+                    (By.XPATH, "//*[contains(text(), 'Подписаться')]")))
+                sub_in.click()
+                time.sleep(3)
+                browser.close()
+            except Exception:
+                browser.close()
+        except Exception:
+            return True
