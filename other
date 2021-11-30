@@ -17,8 +17,17 @@
     def sleep(self):
         browser = self.browser
 
-        ballans_ok = browser.find_element(By.ID, 'user_points_balance').text
-        print('ok', ballans_ok)
-
+        ballans = browser.find_element(By.ID, 'user_points_balance').text
+        print(ballans)
+        
+        if int(ballans) >= 1000:
+            browser.get('https://bosslike.ru/coupons/')
+            time.sleep(2)
+            coupons = browser.find_element(By.XPATH,'//*[@id="CouponCreateForm_value"]')
+            coupons.clear()
+            coupons.send_keys('1000')
+            browser.find_element(By.XPATH,'//*[@id="coupon-create-form"]/div[2]/div/button').click()
+            print('создан купон на 1000 баллов')
+            
         print("go to bed")
         time.sleep(60)
