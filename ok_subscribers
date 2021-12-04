@@ -26,7 +26,7 @@
                         self.one()
                         
                     del title[0]
-                    del index_click[0]
+                    
 
                     browser.switch_to.window(window_before)
 
@@ -41,7 +41,8 @@
 
                     except Exception:
                         continue
-
+                        
+                    del index_click[0]
                    
 
                     if i == 19:
