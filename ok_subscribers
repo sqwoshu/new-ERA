@@ -5,7 +5,7 @@
         window_before = browser.window_handles[0]
 
         ballans_ok = browser.find_element(By.ID, 'user_points_balance').text
-        print('ok', ballans_ok)
+        print('ballans_open', ballans_ok)
 
         title = []
         try:
