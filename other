@@ -12,21 +12,28 @@
                 index_in.append(d)
 
         browser.find_element(By.XPATH,f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[4]/a').click()
-
+        
+        
     def sleep(self):
         browser = self.browser
 
         ballans = browser.find_element(By.ID, 'user_points_balance').text
-        print(ballans)
-        
-        if int(ballans) >= 1000:
+        count = int(ballans)
+        print('ballance_exit', count)
+
+        if count >= 1000:
             browser.get('https://bosslike.ru/coupons/')
-            time.sleep(2)
-            coupons = browser.find_element(By.XPATH,'//*[@id="CouponCreateForm_value"]')
-            coupons.clear()
-            coupons.send_keys('1000')
-            browser.find_element(By.XPATH,'//*[@id="coupon-create-form"]/div[2]/div/button').click()
-            print('создан купон на 1000 баллов')
-            
+            while count >= 1000:
+                time.sleep(2)
+                coupons = browser.find_element(By.XPATH, '//*[@id="CouponCreateForm_value"]')
+                coupons.clear()
+                coupons.send_keys('1000')
+                browser.find_element(By.XPATH, '//*[@id="coupon-create-form"]/div[2]/div/button').click()
+
+                count -= 1000
+                
+
         print("go to bed")
-        time.sleep(300)
+        time.sleep(random.randrange(600, 1300))
+
+        self.auto_subscribers_teleg()
