@@ -1,6 +1,7 @@
     def auto_subscribers_ok(self):
         browser = self.browser
-        time.sleep(2)
+        index_click = self.index_click
+
         browser.get('https://bosslike.ru/tasks/odnoklassniki/subscribe/')
         window_before = browser.window_handles[0]
 
@@ -17,27 +18,42 @@
 
                 for i in range(20):
                     time.sleep(1)
+                    self.click()
+
+                    if title[0] == 'Подписаться':
+                        self.two()
+                    elif title[0] == "Вступить":
+                        self.one()
+                    del title[0]
+
+                    browser.switch_to.window(window_before)
+
                     try:
-                        self.click()
+                        ms = WebDriverWait(browser, 15).until(
+                            EC.presence_of_element_located((By.CSS_SELECTOR, '.notify-message')))
+                        if ms.text == 'Выполнение не подтверждено, проверьте ещё раз\nНажмите на кнопку «Проверить»':
+                            browser.find_element(By.XPATH,f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[5]/div/button').click()
+                            time.sleep(random.randrange(1,2))
+                            browser.find_element(By.XPATH,f'//*[@id="task-item-{index_click[0]}"]/ul/li[1]/a').click()
+                            time.sleep(1)
 
-                        if title[0] == 'Подписаться':
-                            self.two()
-                        elif title[0] == "Вступить":
-                            self.one()
-                        del title[0]
-
-                        browser.switch_to.window(window_before)
                     except Exception:
-                        self.sleep()
+                        continue
+
+                    del index_click[0]
+
                     if i == 19:
                         time.sleep(random.randrange(2, 5))
                         title.clear()
+                        index_click.clear()
                         self.sleep()
             else:
                 title.clear()
+                index_click.clear()
                 self.sleep()
         except Exception:
             title.clear()
+            index_click.clear()
             self.sleep()
 
     def one(self):
