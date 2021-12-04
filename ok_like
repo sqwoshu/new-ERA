@@ -1,5 +1,7 @@
     def auto_like_ok(self):
         browser = self.browser
+        index_click = self.index_click
+
         time.sleep(2)
         browser.get('https://bosslike.ru/tasks/odnoklassniki/like/')
         window_before = browser.window_handles[0]
@@ -23,9 +25,25 @@
                             self.like_photo_ok()
                         else:
                             self.like_post_ok()
+
                         del title[0]
 
                         browser.switch_to.window(window_before)
+
+                        try:
+                            ms = WebDriverWait(browser, 15).until(
+                                EC.presence_of_element_located((By.CSS_SELECTOR, '.notify-message')))
+                            if ms.text == 'Выполнение не подтверждено, проверьте ещё раз\nНажмите на кнопку «Проверить»':
+                                browser.find_element(By.XPATH,
+                                                     f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[5]/div/button').click()
+                                time.sleep(random.randrange(1, 2))
+                                browser.find_element(By.XPATH,
+                                                     f'//*[@id="task-item-{index_click[0]}"]/ul/li[1]/a').click()
+                                time.sleep(1)
+                        except Exception:
+                            continue
+
+                        del index_click[0]
 
                     except Exception:
                         self.sleep()
@@ -38,7 +56,6 @@
         except Exception:
             title.clear()
             self.sleep()
-
 
     def like_post_ok(self):
         browser = self.browser
@@ -77,6 +94,7 @@
                 browser.close()
         except Exception:
             return True
+
     def like_video_ok(self):
         browser = self.browser
         try:
