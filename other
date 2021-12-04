@@ -12,7 +12,6 @@
                 index_in.append(d)
 
         browser.find_element(By.XPATH,f'//*[@id="task-item-{index_click[0]}"]/div/div/div/div[4]/a').click()
-        del index_click[0]
 
     def sleep(self):
         browser = self.browser
