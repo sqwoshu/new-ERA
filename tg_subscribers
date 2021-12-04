@@ -1,25 +1,34 @@
-    def auto_subscribe_teleg(self):
+    def auto_subscribers_teleg(self):
         browser = self.browser
+        index_click = self.index_click
+
         browser.get('https://bosslike.ru/tasks/telegram/subscribe')
 
         ballans_teleg = browser.find_element(By.ID, 'user_points_balance').text
-        print('teleg', ballans_teleg)
+        print('ballans_open', ballans_teleg)
 
         for i in range(20):
             time.sleep(1)
             try:
                 self.click()
-                
+
                 try:
-                    ms = WebDriverWait(browser, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.notify-message')))
-                    if ms.text == 'Ваш Телеграм аккаунт достиг лимита подписок равное 500':
+                    ms = WebDriverWait(browser, 15).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, '.notify-message')))
+                    if ms.text == 'Ваш Телеграм аккаунт достиг лимита подписок равное 500' or  ms.text.split()[0] == 'Обнаружена':
                         ms.click()
-                        self.sleep()  
+                        print('500 телеграм или нужно подождать')
+                        index_click.clear()
+                        self.auto_subscribers_ok()
+                    elif i == 19:
+                        index_click.clear()
+                        self.auto_subscribers_ok()
+                    else:
+                        ms.click()
+                        continue
                 except Exception:
-                    continue
-                    
-                    
+                    index_click.clear()
+                    self.auto_subscribers_ok()
             except Exception:
-                self.sleep()
-            if i == 19:
-                self.sleep()
+                index_click.clear()
+                self.auto_subscribers_ok()
