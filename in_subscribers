@@ -26,9 +26,10 @@
                         time.sleep(1.5)
                         browser.find_element(By.XPATH,f'//*[@id="task-item-{index_in[0]}"]/div/div/div/div[4]/a').click()
 
-                        WebDriverWait(browser, 15).until(
+                        ms = WebDriverWait(browser, 15).until(
                             EC.presence_of_element_located((By.CSS_SELECTOR, ".notify-message")))
-
+                        time.sleep(random.randrange(1,3))
+                        ms.click()
                         del index_in[0]
                     except Exception:
                         del index_in[0]
@@ -56,8 +57,9 @@
             try:
                 sub_in = WebDriverWait(browser, 30).until(EC.presence_of_element_located(
                     (By.XPATH, "//*[contains(text(), 'Подписаться')]")))
+                time.sleep(random.randrange(2,3))
                 sub_in.click()
-                time.sleep(3)
+                time.sleep(random.randrange(1,3))
                 browser.close()
             except Exception:
                 browser.close()
