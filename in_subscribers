@@ -35,10 +35,16 @@
 
                     time.sleep(random.randrange(2,4))
                 except Exception:
+                    index_click.clear()
+                    index_in.clear()
                     self.sleep()
                 if i == 19:
+                    index_click.clear()
+                    index_in.clear()
                     self.sleep()
         else:
+            index_click.clear()
+            index_in.clear()
             self.sleep()
 
     def follow_in(self):
