@@ -25,10 +25,10 @@
                     try:
                         time.sleep(1.5)
                         browser.find_element(By.XPATH,f'//*[@id="task-item-{index_in[0]}"]/div/div/div/div[4]/a').click()
-                        
+
                         WebDriverWait(browser, 15).until(
                             EC.presence_of_element_located((By.CSS_SELECTOR, ".notify-message")))
-                    
+
                         del index_in[0]
                     except Exception:
                         del index_in[0]
