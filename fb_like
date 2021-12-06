@@ -1,4 +1,4 @@
-    def auto_like_in(self):
+    def auto_like_fb(self):
         browser = self.browser
         index_all = self.index_all
         index_click = self.index_click
