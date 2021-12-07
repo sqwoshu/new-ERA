@@ -15,20 +15,26 @@
                 try:
                     ms = WebDriverWait(browser, 15).until(
                         EC.presence_of_element_located((By.CSS_SELECTOR, '.notify-message')))
-                    if ms.text == 'Ваш Телеграм аккаунт достиг лимита подписок равное 500' or  ms.text.split()[0] == 'Обнаружена':
+                    if ms.text == 'Ваш Телеграм аккаунт достиг лимита подписок равное 500' or ms.text.split()[0] == 'Обнаружена':
+                        print(ms.text)
                         ms.click()
                         print('500 телеграм или нужно подождать')
                         index_click.clear()
-                        self.auto_subscribers_ok()
+                        self.sleep()
+                    elif ms.text != 'Ваш Телеграм аккаунт достиг лимита подписок равное 500' or ms.text.split()[0] != 'Обнаружена':
+                        print(ms.text)
+                        ms.click()
+
                     elif i == 19:
                         index_click.clear()
-                        self.auto_subscribers_ok()
+                        self.sleep()
                     else:
                         ms.click()
                         continue
+                    del index_click[0]
                 except Exception:
                     index_click.clear()
-                    self.auto_subscribers_ok()
+                    self.sleep()
             except Exception:
                 index_click.clear()
-                self.auto_subscribers_ok()
+                self.sleep()
