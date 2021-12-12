@@ -1,0 +1,6 @@
+from PIL import Image
+img = Image.open('t.png')
+thresh = 200
+fn = lambda x: 255 if x > thresh else 0
+r = img.convert('L').point(fn, mode='1')
+r.save('t.png')
